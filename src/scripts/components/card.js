@@ -1,6 +1,6 @@
 const card = document.querySelector("#card-template").content;
 
-export function makeCard(newCardTitle, newCardImage, deleteCard, likeCardButton, popupOpenImageModal) {
+export function makeCard(newCardTitle, newCardImage, deleteCard, likeCardButton, openImageModal) {
     const cardElement = card.querySelector(".card").cloneNode(true);
     const deleteButton = cardElement.querySelector(".card__delete-button");
     const likeButton = cardElement.querySelector(".card__like-button");
@@ -15,7 +15,7 @@ export function makeCard(newCardTitle, newCardImage, deleteCard, likeCardButton,
     likeButton.addEventListener("click", likeCardButton);
     deleteButton.addEventListener("click", deleteCard);
     imageButton.addEventListener("click", () =>
-    popupOpenImageModal(newCardImage, newCardTitle));
+    openImageModal(newCardImage, newCardTitle));
     return cardElement;
 }
 

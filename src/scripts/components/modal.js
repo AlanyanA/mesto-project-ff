@@ -18,7 +18,7 @@ function closeOnEscape(event) {
 }
   
 function closeOnOverlay (event) {
-  if (event.target.classList.contains("popup") === true) {
+  if (event.target.classList.contains("popup")) {
     closeModal(event.target);
   }
 }
