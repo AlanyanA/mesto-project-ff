@@ -24,3 +24,23 @@
   z-index: 10;
   transition: visibility 0s, opacity 0.6s;
 }
+
+.popup__input:focus {
+  outline: none;
+}
+
+.popup__input-error {
+  font-size: 12px;
+  color: red;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.popup__input_type_error {
+  border-bottom-color: red;
+  margin-bottom: 0px;
+} 
+
+.popup__new-avatar {
+  min-height: 272px; 
+}
