@@ -1,4 +1,3 @@
-
 import {makeCard} from './components/card.js';
 import {openModal, closeModal} from './components/modal.js';
 import {enableValidation, clearValidation} from './components/validation.js';
