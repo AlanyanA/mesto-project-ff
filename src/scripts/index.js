@@ -1,6 +1,6 @@
 import {makeCard} from './components/card.js';
-import {openModal, closeModal} from './components/modal.js';
-import {enableValidation, clearValidation} from './components/validation.js';
+import {openModal, closeModal, handleClosePopupByClickOnButton} from './components/modal.js';
+import {clearValidation, setEventListeners, showInputError, hideInputError} from './components/validation.js';
 import '../pages/index.css';
 import { updateAvatar, isImageUrl, fetchUserData, fetchCards, addCard, updateProfileData, toggleLike, deleteCard} from './components/api.js'; 
 
@@ -22,6 +22,8 @@ const newCardForm = document.forms['new-place'];
 const popupImage = popupTypeImage.querySelector('.popup__image');
 const placesList = document.querySelector('.places__list');
 
+let userId;
+
 Promise.all([fetchUserData(), fetchCards()])
   .then(([userData, cardsData]) => {
     userId = userData._id; 
@@ -40,9 +42,17 @@ const validationSettings = {
   inputErrorClass: 'popup__input_type_error'
 };
 
-enableValidation(validationSettings);
 
-
+popups.forEach((popup) => {
+  popup.querySelector('.popup__close').addEventListener('click', handleClosePopupByClickOnButton);
+  const formList = Array.from(popup.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+    setEventListeners(formElement, validationSettings);
+  });
+});
 
 avatarForm.addEventListener('submit', changeAvatarFormSubmit);
 
@@ -74,6 +84,7 @@ function addProfileCardFormSubmit(evt) {
     });
 }
 profileImageContainer.addEventListener('click', () => {
+  avatarForm.reset();
   clearValidation(avatarForm, validationSettings);
   openModal(popupChangeAvatar);
 });
@@ -152,7 +163,7 @@ cardAddButton.addEventListener('click', openAddCardPopup);
 
 function openAddCardPopup() {
   clearValidation(popupNewCard, validationSettings);
-
+  newCardForm.reset();
   openModal(popupNewCard);
 }
 
@@ -163,19 +174,6 @@ function handleImageClick(card) {
 
   openModal(popupTypeImage);
 }
-
-popups.forEach((popup) => {
-  popup.querySelector('.popup__close').addEventListener('click', handleClosePopupByClickOnButton);
-});
-
-function handleClosePopupByClickOnButton(event) {
-  if (event.target.classList.contains('popup__close')) {
-    const popup = event.target.closest('.popup');
-    
-    closeModal(popup);
-  }
-}
-let userId;
 
 function updateUserProfile(userData) {
   profileTitle.textContent = userData.name;

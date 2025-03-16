@@ -9,6 +9,14 @@ export function closeModal(popup) {
   document.removeEventListener("keydown", closePopupOnEsc);
   document.removeEventListener("click", closeOnOverlayClick);
 }
+
+export function handleClosePopupByClickOnButton(event) {
+  if (event.target.classList.contains('popup__close')) {
+    const popup = event.target.closest('.popup');
+    
+    closeModal(popup);
+  }
+}
   
 function closePopupOnEsc(event) {
   if (event.key === "Escape") {
