@@ -1,6 +1,6 @@
 import {makeCard} from './components/card.js';
 import {openModal, closeModal, handleClosePopupByClickOnButton} from './components/modal.js';
-import {clearValidation, setEventListeners, showInputError, hideInputError} from './components/validation.js';
+import {clearValidation, enableValidation} from './components/validation.js';
 import '../pages/index.css';
 import { updateAvatar, isImageUrl, fetchUserData, fetchCards, addCard, updateProfileData, toggleLike, deleteCard} from './components/api.js'; 
 
@@ -42,16 +42,10 @@ const validationSettings = {
   inputErrorClass: 'popup__input_type_error'
 };
 
+enableValidation(validationSettings);
 
 popups.forEach((popup) => {
   popup.querySelector('.popup__close').addEventListener('click', handleClosePopupByClickOnButton);
-  const formList = Array.from(popup.querySelectorAll('.popup__form'));
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', (event) => {
-      event.preventDefault();
-    });
-    setEventListeners(formElement, validationSettings);
-  });
 });
 
 avatarForm.addEventListener('submit', changeAvatarFormSubmit);
